@@ -1,3 +1,5 @@
+package pieces;
+
 public class Knight {
     private char symbol;
     private boolean isWhite;

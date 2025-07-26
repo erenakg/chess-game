@@ -1,3 +1,5 @@
+package pieces;
+
 public class Rook {
     private char symbol;
     private boolean isWhite;

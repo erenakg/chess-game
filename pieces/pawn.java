@@ -1,58 +1,49 @@
-public class Bishop {
+package pieces;
+
+public class Pawn {
     private char symbol;
     private boolean isWhite;
     private int row, col;
+    private boolean hasMoved; // İlk hamle için gerekli
     
-    public Bishop(boolean isWhite, int row, int col) {
+    public Pawn(boolean isWhite, int row, int col) {
         this.isWhite = isWhite;
-        this.symbol = isWhite ? 'B' : 'b';
+        this.symbol = isWhite ? 'P' : 'p';
         this.row = row;
         this.col = col;
+        this.hasMoved = false;
     }
     
     public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Board board) {
-        int rowDiff = Math.abs(toRow - fromRow);
+        int rowDiff = toRow - fromRow;
         int colDiff = Math.abs(toCol - fromCol);
         
-        // Fil çapraz hareket eder (rowDiff == colDiff)
-        if (rowDiff != colDiff) {
-            return false;
-        }
+        // Beyaz piyonlar yukarı (-), siyah piyonlar aşağı (+) hareket eder
+        int direction = isWhite ? -1 : 1;
         
-        // Yol temiz mi kontrol et
-        return isPathClear(fromRow, fromCol, toRow, toCol, board);
-    }
-    
-    private boolean isPathClear(int fromRow, int fromCol, int toRow, int toCol, Board board) {
-        int rowDirection = 0;
-        int colDirection = 0;
-        
-        if (toRow > fromRow) rowDirection = 1;
-        else if (toRow < fromRow) rowDirection = -1;
-        
-        if (toCol > fromCol) colDirection = 1;
-        else if (toCol < fromCol) colDirection = -1;
-        
-        int currentRow = fromRow + rowDirection;
-        int currentCol = fromCol + colDirection;
-        
-        while (currentRow != toRow || currentCol != toCol) {
-            if (board.getPiece(currentRow, currentCol) != '.') {
-                return false; // Yolda taş var
+        // Düz ileri hareket
+        if (colDiff == 0) {
+            // 1 kare ileri
+            if (rowDiff == direction) {
+                return board.getPiece(toRow, toCol) == '.';
             }
-            currentRow += rowDirection;
-            currentCol += colDirection;
+            // İlk hamlede 2 kare ileri
+            if (!hasMoved && rowDiff == 2 * direction) {
+                return board.getPiece(toRow, toCol) == '.' && 
+                       board.getPiece(fromRow + direction, fromCol) == '.';
+            }
         }
         
-        // Hedef kareyi kontrol et
-        char targetPiece = board.getPiece(toRow, toCol);
-        if (targetPiece == '.') {
-            return true; // Boş kare
+        // Çapraz yeme hamlesi
+        if (colDiff == 1 && rowDiff == direction) {
+            char targetPiece = board.getPiece(toRow, toCol);
+            if (targetPiece != '.') {
+                boolean targetIsWhite = Character.isUpperCase(targetPiece);
+                return targetIsWhite != this.isWhite;
+            }
         }
         
-        // Rakip taşı mı?
-        boolean targetIsWhite = Character.isUpperCase(targetPiece);
-        return targetIsWhite != this.isWhite;
+        return false;
     }
     
     public char getSymbol() {
@@ -74,5 +65,10 @@ public class Bishop {
     public void setPosition(int row, int col) {
         this.row = row;
         this.col = col;
+        this.hasMoved = true;
+    }
+    
+    public boolean hasMoved() {
+        return hasMoved;
     }
 }
