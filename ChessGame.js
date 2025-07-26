@@ -12,19 +12,11 @@ class ChessGame {
     }
     
     startGame() {
-        // Boş tahta ile başla
-        const emptyBoard = new Board();
-        console.log("Boş Tahta:");
-        console.log(emptyBoard.displayBoard());
-        emptyBoard.displayToElement('empty-board');
-        
-        console.log("\n" + "=".repeat(30) + "\n");
-        
-        // Taşlarla dolu tahta
+        // Oyun tahtasını başlangıç pozisyonuyla oluştur
         const gameBoard = new StartBoard();
-        console.log("Başlangıç Tahtası:");
+        console.log("Satranç Oyunu Başladı!");
         console.log(gameBoard.displayBoard());
-        gameBoard.displayToElement('start-board');
+        gameBoard.displayToElement('game-board');
         
         // Test: Bir piyonu hareket ettir
         this.testPieceMovement(gameBoard);
@@ -45,6 +37,9 @@ class ChessGame {
             board.setPiece(4, 4, 'P'); // Yeni pozisyona yerleştir
             console.log("\nHareket sonrası tahta:");
             console.log(board.displayBoard());
+            
+            // Görsel tahtayı da güncelle
+            board.displayToElement('game-board');
         }
     }
 }
