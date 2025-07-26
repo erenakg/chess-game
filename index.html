@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satranç Oyunu</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            padding: 20px;
+        }
+        
+        .chess-board {
+            background-color: #1e1e1e;
+            border: 2px solid #444;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .board-display {
+            white-space: pre-line;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        
+        .title {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .separator {
+            color: #666;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">♟️ Satranç Oyunu - JavaScript Versiyonu</div>
+    
+    <div id="empty-board-container">
+        <h3>Boş Tahta:</h3>
+        <div class="chess-board">
+            <div id="empty-board" class="board-display"></div>
+        </div>
+    </div>
+    
+    <div class="separator">==============================</div>
+    
+    <div id="start-board-container">
+        <h3>Başlangıç Tahtası:</h3>
+        <div class="chess-board">
+            <div id="start-board" class="board-display"></div>
+        </div>
+    </div>
+
+    <script src="js/Board.js"></script>
+    <script src="js/StartBoard.js"></script>
+    <script src="js/pieces/Pawn.js"></script>
+    <script src="js/pieces/Rook.js"></script>
+    <script src="js/pieces/Knight.js"></script>
+    <script src="js/pieces/Bishop.js"></script>
+    <script src="js/pieces/Queen.js"></script>
+    <script src="js/pieces/King.js"></script>
+    <script src="js/ChessGame.js"></script>
+</body>
+</html>
