@@ -1,3 +1,5 @@
+package pieces;
+
 public class King {
     private char symbol;
     private boolean isWhite;

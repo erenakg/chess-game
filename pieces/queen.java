@@ -1,3 +1,5 @@
+package pieces;
+
 public class Queen {
     private char symbol;
     private boolean isWhite;

@@ -1,3 +1,5 @@
+package pieces;
+
 public class Bishop {
     private char symbol;
     private boolean isWhite;

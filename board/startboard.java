@@ -1,3 +1,5 @@
+package board;
+
 public class StartBoard extends Board {
     
     public StartBoard() {
