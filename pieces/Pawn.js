@@ -58,10 +58,10 @@ class Pawn {
     setPosition(row, col) {
         this.row = row;
         this.col = col;
-        this.hasMoved = true;
     }
     
-    hasMovedBefore() {
-        return this.hasMoved;
+    // markAsMoved fonksiyonu var ama çağrılmıyor
+    markAsMoved() {
+        this.hasMoved = true;
     }
 }

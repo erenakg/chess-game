@@ -46,6 +46,9 @@ class King {
     setPosition(row, col) {
         this.row = row;
         this.col = col;
+    }
+
+    markAsMoved() {
         this.hasMoved = true;
     }
     

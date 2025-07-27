@@ -5,6 +5,7 @@ class ChessGame {
         this.selectedSquare = null;
         this.selectedPiece = null;
         this.currentPlayer = 'white'; // 'white' veya 'black'
+        this.pieceObjects = new Map(); // Piece object'lerini sakla
         this.init();
     }
     
@@ -31,8 +32,9 @@ class ChessGame {
         const squares = document.querySelectorAll('.square');
         squares.forEach(square => {
             square.addEventListener('click', (e) => {
-                const row = parseInt(e.target.getAttribute('data-row'));
-                const col = parseInt(e.target.getAttribute('data-col'));
+                // currentTarget kullan, target değil
+                const row = parseInt(e.currentTarget.getAttribute('data-row'));
+                const col = parseInt(e.currentTarget.getAttribute('data-col'));
                 this.handleSquareClick(row, col);
             });
         });
@@ -123,6 +125,26 @@ class ChessGame {
         } else {
             console.log(`${piece} ${from}'den ${to}'ya hareket etti`);
         }
+        
+        // Piece object'i güncelle
+        const pieceKey = `${fromRow}-${fromCol}`;
+        let pieceObj = this.pieceObjects.get(pieceKey);
+        
+        if (!pieceObj) {
+            pieceObj = this.createPieceObject(piece, fromRow, fromCol);
+        }
+        
+        // Pozisyonu güncelle
+        pieceObj.setPosition(toRow, toCol);
+        
+        // Pawn ve King için hasMoved'i güncelle
+        if (pieceObj.markAsMoved) {
+            pieceObj.markAsMoved();
+        }
+        
+        // Map'i güncelle
+        this.pieceObjects.delete(pieceKey);
+        this.pieceObjects.set(`${toRow}-${toCol}`, pieceObj);
         
         // Tahtayı güncelle
         this.gameBoard.setPiece(fromRow, fromCol, '.');
