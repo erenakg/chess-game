@@ -69,8 +69,9 @@ class Board {
                     const img = document.createElement('img');
                     img.src = this.pieceImages[piece];
                     img.alt = piece;
-                    img.style.width = '50px';
-                    img.style.height = '50px';
+                    // Resim boyutlarını kare boyutuna göre ayarla
+                    img.style.width = '55px';  // 65px karenin %85'i
+                    img.style.height = '55px'; // 65px karenin %85'i
                     img.style.pointerEvents = 'none'; // Resme tıklamayı engelle
                     square.appendChild(img);
                 }
