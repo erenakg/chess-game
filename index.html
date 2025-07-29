@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satranç</title>
+    <title>Satranç Oyunu</title>
     <style>
         body {
             font-family: 'Segoe UI', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: 
+                /* Basit siyah-gri gradient */
+                linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 25%, #333333 50%, #1f1f1f 75%, #222222 100%);
             color: #ffffff;
             padding: 20px;
             min-height: 100vh;
@@ -15,65 +17,119 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Metin seçimini engelle */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* Çok hafif turuncu parıltılar */
+                radial-gradient(circle at 25% 25%, 
+                    rgba(255, 107, 53, 0.05) 0%, 
+                    transparent 30%),
+                radial-gradient(circle at 75% 75%, 
+                    rgba(255, 140, 66, 0.03) 0%, 
+                    transparent 30%),
+                radial-gradient(circle at 50% 50%, 
+                    rgba(255, 87, 51, 0.02) 0%, 
+                    transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        body::after {
+            display: none; /* Eski karmaşık arkaplanı kaldır */
         }
         
         .container {
             text-align: center;
-            /* Metin seçimini engelle */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.4));
+            position: relative;
+            z-index: 10;
         }
         
         .title {
-            color: #f39c12;
-            font-size: 28px;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            color: #ff6b35;
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-shadow: 
+                3px 3px 6px rgba(0,0,0,0.8),
+                0 0 15px rgba(255, 107, 53, 0.7),
+                0 0 30px rgba(255, 107, 53, 0.4);
             font-weight: bold;
-            /* Metin seçimini engelle */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42, #ff7043, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .chess-board {
             display: grid;
-            grid-template-columns: repeat(8, 60px);
-            grid-template-rows: repeat(8, 60px);
-            gap: 2px;
+            grid-template-columns: repeat(8, 70px);
+            grid-template-rows: repeat(8, 70px);
+            gap: 3px;
             margin: 0 auto;
-            border: 4px solid #8B4513;
-            background-color: #8B4513;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            /* Metin seçimini engelle */
+            border: 4px solid #ff6b35;
+            background: 
+                /* Basit koyu gradient */
+                linear-gradient(45deg, #2a2a2a, #1f1f1f, #2a2a2a);
+            box-shadow: 
+                0 0 30px rgba(255, 107, 53, 0.6),
+                inset 0 0 20px rgba(255, 107, 53, 0.1),
+                0 10px 40px rgba(0,0,0,0.7);
+            border-radius: 12px;
+            position: relative;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
         
+        .chess-board::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: 
+                linear-gradient(45deg, #ff6b35, #ff8c42, #ff6b35);
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
         .square {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.15s ease;
-            /* Metin seçimini engelle */
+            transition: all 0.2s ease;
+            position: relative;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            /* Sürüklemeyi de engelle */
             -webkit-user-drag: none;
             -khtml-user-drag: none;
             -moz-user-drag: none;
@@ -84,8 +140,7 @@
         .square img {
             max-width: 85%;
             max-height: 85%;
-            transition: all 0.15s ease;
-            /* Resim seçimini ve sürüklemeyi engelle */
+            transition: all 0.2s ease;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -96,48 +151,72 @@
             -o-user-drag: none;
             user-drag: none;
             pointer-events: none;
-            /* Sağ tık menüsünü engelle */
             -webkit-touch-callout: none;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.6));
         }
         
         .square:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255,255,255,0.6);
-            z-index: 10;
+            transform: scale(1.1);
+            box-shadow: 
+                0 0 20px rgba(255, 107, 53, 0.7),
+                inset 0 0 15px rgba(255, 107, 53, 0.2);
+            z-index: 15;
         }
         
         .square:hover img {
-            transform: scale(1.1);
-            filter: brightness(1.2);
+            transform: scale(1.15);
+            filter: 
+                brightness(1.3) 
+                drop-shadow(0 0 8px rgba(255, 107, 53, 0.5))
+                drop-shadow(2px 2px 6px rgba(0,0,0,0.8));
         }
         
         .square.selected {
-            box-shadow: 0 0 9px #ffff00, inset 0 0 20px rgba(255,255,0,0.3);
-            transform: scale(1.1);
-            border: 1px solid #ffff00;
+            box-shadow: 
+                0 0 25px #ff6b35, 
+                inset 0 0 20px rgba(255, 107, 53, 0.3),
+                0 0 40px rgba(255, 107, 53, 0.4);
+            transform: scale(1.12);
+            border: 3px solid #ff6b35;
+            background: 
+                radial-gradient(circle, rgba(255, 107, 53, 0.2), transparent);
         }
         
         .white-square {
-            background-color: #F0D9B5;
+            background: 
+                linear-gradient(135deg, #F0D9B5 0%, #E6CFA8 50%, #F0D9B5 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
         }
         
         .black-square {
-            background-color: #B58863;
+            background: 
+                linear-gradient(135deg, #B58863 0%, #A67C52 50%, #B58863 100%);
+            border: 1px solid rgba(255, 107, 53, 0.25);
         }
         
         .instructions {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #ecf0f1;
-            opacity: 0.8;
-            /* Metin seçimini engelle */
+            margin-top: 30px;
+            font-size: 16px;
+            color: #cccccc;
+            opacity: 0.9;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            text-shadow: 
+                2px 2px 4px rgba(0,0,0,0.8),
+                0 0 5px rgba(255, 107, 53, 0.3);
+            background: 
+                linear-gradient(45deg, 
+                    rgba(255, 107, 53, 0.1), 
+                    rgba(42, 42, 42, 0.8), 
+                    rgba(255, 107, 53, 0.1));
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 107, 53, 0.3);
         }
         
-        /* Tüm sayfa için genel metin seçim engelleme */
+        /* Genel stillendirme */
         * {
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
@@ -148,9 +227,22 @@
             user-select: none;
         }
         
-        /* Fare işaretçisi stilleri */
         .square:active {
-            transform: scale(0.98);
+            transform: scale(1.05);
+        }
+        
+        /* Basit glow animasyonu */
+        @keyframes simpleGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); 
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(255, 107, 53, 0.6); 
+            }
+        }
+        
+        .chess-board {
+            animation: simpleGlow 6s ease-in-out infinite;
         }
     </style>
 </head>
@@ -159,7 +251,7 @@
         <div class="title">♟️ Satranç Oyunu - Beyaz Oyuncunun Sırası ♟️</div>
         <div id="game-board" class="chess-board"></div>
         <div class="instructions">
-            Bir taşa tıklayın, sonra hareket etmek istediğiniz kareye tıklayın
+            🎯 Bir taşa tıklayın, sonra hareket etmek istediğiniz kareye tıklayın
         </div>
     </div>
 
