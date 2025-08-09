@@ -71,6 +71,9 @@ class ChessGame {
         // Seçili kareyi görsel olarak belirgin yap
         this.highlightSquare(row, col, true);
         
+        // Bu taşın hareket edebileceği yerleri göster
+        this.showPossibleMoves(row, col, piece);
+        
         console.log(`${piece} taşı seçildi: ${String.fromCharCode(97 + col)}${8 - row}`);
     }
     
@@ -170,6 +173,8 @@ class ChessGame {
         if (this.selectedSquare) {
             this.highlightSquare(this.selectedSquare.row, this.selectedSquare.col, false);
         }
+        // Hareket göstergelerini temizle
+        this.clearMoveHighlights();
         this.selectedSquare = null;
         this.selectedPiece = null;
     }
@@ -190,6 +195,42 @@ class ChessGame {
         const title = document.querySelector('.title');
         const playerText = this.currentPlayer === 'white' ? 'Beyaz' : 'Siyah';
         title.textContent = `♟️ Satranç Oyunu - ${playerText} Oyuncunun Sırası ♟️`;
+    }
+    
+    // Hareket edebilir kareleri göster
+    showPossibleMoves(row, col, piece) {
+        // Önce eski hareket göstergelerini temizle
+        this.clearMoveHighlights();
+        
+        const pieceObj = this.createPieceObject(piece, row, col);
+        if (!pieceObj) return;
+        
+        // Tüm tahta karelerini kontrol et
+        for (let toRow = 0; toRow < 8; toRow++) {
+            for (let toCol = 0; toCol < 8; toCol++) {
+                if (pieceObj.isValidMove(row, col, toRow, toCol, this.gameBoard)) {
+                    const targetPiece = this.gameBoard.getPiece(toRow, toCol);
+                    const squareIndex = toRow * 8 + toCol;
+                    const square = document.querySelectorAll('.square')[squareIndex];
+                    
+                    if (targetPiece && targetPiece !== '.') {
+                        // Rakip taş varsa yeme hamlesi
+                        square.classList.add('possible-capture');
+                    } else {
+                        // Boş kare ise normal hareket
+                        square.classList.add('possible-move');
+                    }
+                }
+            }
+        }
+    }
+    
+    // Hareket göstergelerini temizle
+    clearMoveHighlights() {
+        const squares = document.querySelectorAll('.square');
+        squares.forEach(square => {
+            square.classList.remove('possible-move', 'possible-capture');
+        });
     }
 }
 
