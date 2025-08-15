@@ -48,6 +48,8 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     border-radius: 4px;
+    border: none;
+    transform-origin: center; /* Buraya da ekle */
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -88,19 +90,27 @@ body {
 .square.selected {
     box-shadow: 0 0 15px #ff6b35;
     transform: scale(1.08);
-    border: 2px solid #ff6b35;
+    border: 2px solid #ff6b35 !important;
 }
 
 /* Hareket edebilir kareler için stil - sadece kenarlık */
 .square.possible-move {
     border: 3px solid #22c55e !important;
     box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+    transform: scale(0.97) !important;
+    transform-origin: center center !important;
+    justify-self: center !important;
+    align-self: center !important;
 }
 
 /* Yeme hamlesi için stil - sadece kenarlık */
 .square.possible-capture {
     border: 3px solid #ef4444 !important;
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+    transform: scale(0.97) !important;
+    transform-origin: center center !important;
+    justify-self: center !important;
+    align-self: center !important;
 }
 
 .white-square {
