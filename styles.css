@@ -35,9 +35,7 @@ body {
     border: 3px solid #ff6b35;
     background: #1a1a1a;
     border-radius: 8px;
-    /* Padding'i kaldır - border tam tahtaya oturur */
     padding: 4px;
-    /* Box-sizing ile border içeride kalır */
     box-sizing: border-box;
 }
 
@@ -50,6 +48,8 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     border-radius: 4px;
+    border: none;
+    transform-origin: center; /* Buraya da ekle */
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -90,50 +90,27 @@ body {
 .square.selected {
     box-shadow: 0 0 15px #ff6b35;
     transform: scale(1.08);
-    border: 2px solid #ff6b35;
+    border: 2px solid #ff6b35 !important;
 }
 
-/* Hareket edebilir kareler için stil */
+/* Hareket edebilir kareler için stil - sadece kenarlık */
 .square.possible-move {
-    /* Arka plan rengini değiştirme - sadece kenarlık ekle */
     border: 3px solid #22c55e !important;
     box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+    transform: scale(0.97) !important;
+    transform-origin: center center !important;
+    justify-self: center !important;
+    align-self: center !important;
 }
 
-.square.possible-move::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    background: #22c55e;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    opacity: 0.8;
-}
-
-/* Yeme hamlesi için farklı stil */
+/* Yeme hamlesi için stil - sadece kenarlık */
 .square.possible-capture {
-    /* Arka plan rengini değiştirme - sadece kenarlık ekle */
     border: 3px solid #ef4444 !important;
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
-}
-
-.square.possible-capture::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    background: #ef4444;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    border: 2px solid #ffffff;
-    opacity: 0.9;
+    transform: scale(0.97) !important;
+    transform-origin: center center !important;
+    justify-self: center !important;
+    align-self: center !important;
 }
 
 .white-square {
